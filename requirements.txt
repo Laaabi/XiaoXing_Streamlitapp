@@ -5,4 +5,5 @@ openai
 torch
 scikit-learn
 lightfm
+LightGCN
 torch_sparse
