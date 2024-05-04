@@ -10,3 +10,4 @@ torch_geometric
 plotly
 matplotlib
 wordcloud
+openpyxl
