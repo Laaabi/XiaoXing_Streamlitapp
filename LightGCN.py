@@ -20,8 +20,7 @@ import copy
 
 import torch
 from torch import nn, optim, Tensor
-import torch_sparse
-from torch_sparse import SparseTensor, matmul
+#from torch_sparse import SparseTensor, matmul
 from torch_geometric.utils import degree
 from torch_geometric.utils import structured_negative_sampling
 from torch_geometric.data import download_url, extract_zip
