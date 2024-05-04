@@ -571,7 +571,7 @@ def user_behaviour_self_statistics(user_behaviour, user_id,song_label_df):
         # 创建词云对象
         wordcloud = WordCloud(width=800, height=400, background_color='white')
         # 加载中文字体
-        font_path = "C:/Users/tissue/Desktop/simhei.ttf"
+        font_path = "simhei.ttf"
         # 生成词云图
         wordcloud = WordCloud(width=800, height=400, background_color='white',font_path=font_path).generate_from_frequencies(word_counts)
     
