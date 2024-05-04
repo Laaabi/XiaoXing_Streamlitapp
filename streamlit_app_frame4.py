@@ -31,8 +31,8 @@ from openai import OpenAI
 
 import lightfm
 from lightfm import LightFM
-from code import LightGCN
-from code.LightGCN import LightGCN, make_predictions, merge_and_sort
+import LightGCN
+from LightGCN import LightGCN, make_predictions, merge_and_sort
 import torch
 
 
