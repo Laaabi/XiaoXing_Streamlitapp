@@ -1,8 +1,16 @@
 streamlit
 pandas
 jieba
+re
+pickle
 openai
 torch
 scikit-learn
 lightfm
+torch
 torch_sparse
+torch_geometric
+plotly
+matplotlib
+wordcloud
+collections
