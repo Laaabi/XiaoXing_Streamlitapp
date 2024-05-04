@@ -6,7 +6,6 @@ torch
 scikit-learn
 lightfm
 torch
-torch_sparse
 torch_geometric
 plotly
 matplotlib
