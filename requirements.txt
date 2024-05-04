@@ -1,7 +1,6 @@
 streamlit
 pandas
 jieba
-pickle
 openai
 torch
 scikit-learn
