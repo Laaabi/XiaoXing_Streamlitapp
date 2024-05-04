@@ -15,7 +15,7 @@ import numpy as np
 import jieba
 import jieba.analyse as ana
 # 加载未登录词 
-jieba.load_userdict('D:/学习/学习资料/毕业设计/未登录词.txt')
+jieba.load_userdict('未登录词.txt')
 import re
 import pickle
 
@@ -60,7 +60,7 @@ st.set_page_config(
 # In[3]:
 
 
-song_label_df = load_data('D:/学习/学习资料/毕业设计/userBehavior(去1歌曲标签补充版)(更新).xlsx')
+song_label_df = load_data('userBehavior(去1歌曲标签补充版)(更新).xlsx')
 
 
 # In[ ]:
@@ -89,10 +89,10 @@ def load_model_lightgcn(file_path):
 
 
 # 加载LightFM模型
-model_lightfm = load_model_lightfm("D:/学习/学习资料/毕业设计/lightfm_model.pkl")
+model_lightfm = load_model_lightfm("lightfm_model.pkl")
 # 加载LightGCN模型
 num_users = model_lightfm.user_embeddings.shape[0]
-model_lightgcn = load_model_lightgcn("D:/学习/学习资料/毕业设计/lightgcn_model.pth")
+model_lightgcn = load_model_lightgcn("lightgcn_model.pth")
     
 
 # In[4]:
@@ -130,9 +130,9 @@ def user_register(users_df, user_id_df, username, password):
     user_id = last_user_id + 1
     new_user = {'user_id': user_id, 'user': username, 'password': password}
     users_df = users_df._append(new_user, ignore_index=True)
-    write_users_data("D:/学习/学习资料/毕业设计/用户登录.xlsx", users_df)
+    write_users_data("用户登录.xlsx", users_df)
     user_id_df.iat[0, 0] = new_user['user_id']
-    write_users_data("D:/学习/学习资料/毕业设计/用户id临时存储.xlsx", user_id_df)
+    write_users_data("用户id临时存储.xlsx", user_id_df)
     st.success(f"注册成功，欢迎 {username} 登录！")
     return users_df
 
@@ -142,7 +142,7 @@ def user_login(users_df, user_id_df, username, password):
     if match_user_id is not None:
         user_id_df.iat[0, 0] = match_user_id
         st.success(f"登录成功，欢迎 {username}！")
-        write_users_data("D:/学习/学习资料/毕业设计/用户id临时存储.xlsx", user_id_df)
+        write_users_data("用户id临时存储.xlsx", user_id_df)
         return True
     else:
         st.error("昵称或密码错误，请重新输入。")
@@ -358,7 +358,7 @@ def user_interaction(users_df, user_id, user_behaviour,song_label_df):
             elif not any(keyword in user_input for keyword in search_keywords):
                 match_song_mid_without_prefix = match_song_mid.replace('https://y.qq.com/n/ryqq/songDetail/', '')
                 user_behaviour2 = update_user_behaviour(users_df, user_behaviour, user_id, match_song_mid_without_prefix,song_label_df)
-                write_users_data("D:/学习/学习资料/毕业设计/userBehavior(去1播放版)(更新).xlsx", user_behaviour2)
+                write_users_data("userBehavior(去1播放版)(更新).xlsx", user_behaviour2)
                 
                 messages = [{'role': 'user', 'content':  user_input},]
                 answer = gpt_35_api(messages)
@@ -372,7 +372,7 @@ def user_interaction(users_df, user_id, user_behaviour,song_label_df):
             else:
                 match_song_mid_without_prefix = match_song_mid.replace('https://y.qq.com/n/ryqq/songDetail/', '')
                 user_behaviour2 = update_user_behaviour(users_df, user_behaviour, user_id, match_song_mid_without_prefix,song_label_df)
-                write_users_data("D:/学习/学习资料/毕业设计/userBehavior(去1播放版)(更新).xlsx", user_behaviour2)
+                write_users_data("userBehavior(去1播放版)(更新).xlsx", user_behaviour2)
                 # 输出匹配度最高的歌曲信息
                 with st.chat_message("assistant"):
                     st.markdown(f"为你推荐： {match_song} - {match_singer}<br>歌曲链接： {match_song_mid}", unsafe_allow_html=True)
@@ -437,7 +437,7 @@ def update_user_behaviour(users_df, user_behaviour, user_id, match_song_mid_with
         user_behaviour = user_behaviour._append(new_row, ignore_index=True)
     user_behaviour['歌曲总counts'] = user_behaviour.groupby('song_id')['counts'].transform('sum')
     song_label_df.loc[song_label_df['song_mid'] == match_song_mid_without_prefix, '歌曲总counts'] = int(song_label_df[song_label_df['song_mid'] == match_song_mid_without_prefix]['歌曲总counts'].to_string(index=False))+1
-    write_users_data("D:/学习/学习资料/毕业设计/userBehavior(去1歌曲标签补充版)(更新).xlsx", song_label_df)
+    write_users_data("userBehavior(去1歌曲标签补充版)(更新).xlsx", song_label_df)
 
     return user_behaviour
 
@@ -734,7 +734,7 @@ def play_click_button(users_df, user_id, match_song_mid_without_prefix, user_beh
     else:
         # 将这首歌加入该用户的behaviour里
         user_behaviour2 = update_user_behaviour(users_df, user_behaviour, user_id, match_song_mid_without_prefix,song_label_df)
-        write_users_data("D:/学习/学习资料/毕业设计/userBehavior(去1播放版)(更新).xlsx", user_behaviour2)
+        write_users_data("userBehavior(去1播放版)(更新).xlsx", user_behaviour2)
         st.success("已更新喜欢列表")
 
 
@@ -751,10 +751,10 @@ def dislike_click_button(users_df, user_id, match_song_mid_without_prefix, user_
         updated_value = match_song_mid_without_prefix
     users_df.loc[users_df['user_id'] == user_id, 'blacklist'] = updated_value
     # st.success(f"歌曲 {match_song} 已加入黑名单！")
-    write_users_data("D:/学习/学习资料/毕业设计/用户登录.xlsx", users_df)
+    write_users_data("用户登录.xlsx", users_df)
 
     user_behaviour2 = user_behaviour2.drop(user_behaviour2.index[-1])
-    write_users_data("D:/学习/学习资料/毕业设计/userBehavior(去1播放版)(更新).xlsx", user_behaviour2)
+    write_users_data("userBehavior(去1播放版)(更新).xlsx", user_behaviour2)
 
     st.success("感谢反馈~我会努力变得更好ヾ(•ω•`)o")
 
@@ -764,9 +764,9 @@ def dislike_click_button(users_df, user_id, match_song_mid_without_prefix, user_
 
 # 主应用程序
 def main():
-    users_df = read_users_data("D:/学习/学习资料/毕业设计/用户登录.xlsx")
-    user_id_df = pd.read_excel('D:/学习/学习资料/毕业设计/用户id临时存储.xlsx', engine='openpyxl')
-    user_behaviour = pd.read_excel('D:/学习/学习资料/毕业设计/userBehavior(去1播放版)(更新).xlsx', engine='openpyxl')
+    users_df = read_users_data("用户登录.xlsx")
+    user_id_df = pd.read_excel('用户id临时存储.xlsx', engine='openpyxl')
+    user_behaviour = pd.read_excel('userBehavior(去1播放版)(更新).xlsx', engine='openpyxl')
     user_id = user_id_df.iat[0, 0] # 获取第一行第一列的单元格值
     
     # 进入网页后先检查用户是否登录
