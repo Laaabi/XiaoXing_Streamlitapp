@@ -252,7 +252,7 @@ def display_rankings_popularity(user_id, users_df, user_behaviour,ranking_df):
 
 greetings_keywords = ["你好", "hi", "Hi", "早上好", "晚上好", "中午好", "下午好", "哈喽", "嗨", "在吗", "在不", "早生蚝", "晚生蚝", "你是", "自我介绍"]
 gratitude_keywords = ['谢', '哈哈', '嘿嘿', '嗯', '棒', '不错', '好的']
-search_keywords = ['推荐', '歌', '首', '有关', '关于', '音乐', '相关', '想听','曲']
+search_keywords = ['推荐', '歌', '首', '有关', '关于', '音乐', '相关', '想听','曲','歌曲']
 
 
 # In[8]:
